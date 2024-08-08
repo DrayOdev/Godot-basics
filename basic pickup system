@@ -1,4 +1,4 @@
-# THIS WAS CREATED IN GODOT 4.2.2 AND MAY NOT WORK IN LATER OR PREVIOUS VERSIONS ALL CODE WAS DONE BY DRAYODEV
+# THIS WAS CREATED IN GODOT 4.2.2 AND MAY NOT WORK IN LATER OR PREVIOUS VERSIONS ALL CODE WAS DONE BY DRAYODEV 
 # welocme in the code below will be marked with information explaining what it does and why its there 
 extends CharacterBody3D
 
@@ -27,3 +27,4 @@ func _process(delta):
 # any item/object you would like the player to interact with must be in the chosen group in my case col but it could be anything
 # let me know if you have any issues with this or require assistance feel free to contact me via my discord!
 # https://discord.com/invite/dBSz63xNhN
+# objects currents can faze through wall i will update with a fix shortly
