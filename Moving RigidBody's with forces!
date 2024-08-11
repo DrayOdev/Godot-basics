@@ -1,0 +1,118 @@
+# THIS WAS CREATED IN GODOT 4.2.2 AND MAY NOT WORK IN LATER OR PREVIOUS VERSIONS CODE WAS DONE BY DRAYODEV SOME CODE WAS ADAPTED FROM GODOT 3.5 FROM ABRA
+# Lets get more advanced and move rigidbody's with forces!
+# Today you will learn how to make a Pick up, Drop, object rotation and throwing system i will also inform you on what you can edit to make it feel more unique to your game or specific items!
+
+
+
+# There is alot more code and things are a lot more complex but should still be easy to impliment!
+
+
+
+extends CharacterBody3D
+
+var item: RigidBody3D = null                                         # a lot has changed hope your ready!
+var holding = false
+var pull_power = 5.0
+var rotation_power = 0.05
+var locked = false
+var kb_multiplier = 5
+
+@onready var arm = $twist_pivot/pitch_pivot/arm
+@onready var hand = $twist_pivot/pitch_pivot/hand
+
+#..... movement code and variables
+
+@onready var arm = $twist_pivot/pitch_pivot/arm
+@onready var hand = $twist_pivot/pitch_pivot/hand
+@onready var generic_6dof_joint_3d = $twist_pivot/pitch_pivot/Generic6DOFJoint3D
+@onready var static_body_3d = $twist_pivot/pitch_pivot/StaticBody3D
+
+# We will be utilising _physics_process for this!
+
+func _physics_process(delta):
+	#movement code
+	
+	
+	
+	if item != null and holding == true:
+		var a = item.global_position
+		var b = hand.global_position
+		var c = a.distance_to(b)
+		var calc = (a.direction_to(b))*pull_power*c
+		item.set_linear_velocity(calc)
+
+
+
+func _process(delta):
+	
+	if time <= 0.1: # we are using 0.1 instead of 0 because of how quickly the calculation occours leading to the end point being 0 this is preferance you can use 0 if you prefere it doesn't matter at all
+		time = 0.1 # this is to stop it decending forever
+		drop()
+	
+	if arm.is_colliding() and arm.get_collider() is RigidBody3D:
+		item = arm.get_collider()
+		time = 5
+
+	if arm.get_collider != RigidBody3D:		# lets you look at other thigs while the time still takes effect!
+		time -= 0.1		# this is a time calculation we are doing this so we dont have objects "teleporting" across the map
+
+	if Input.is_action_just_pressed("left_click") and arm.is_colliding():
+		if item.is_in_group("col"):
+			generic_6dof_joint_3d.set_node_b(item.get_path())		# id name the generic_6dof_joint_3 something else to make it neater i didn't so it is easier to understand!
+			holding = true			# this is almost the same as last time with just one change shouldn't be hard to implement!
+
+	if Input.is_action_just_pressed("drop"):
+		drop()			# calls the drop func that we have created!
+
+	
+	if Input.is_action_just_pressed("throw") and holding == true:			# so we are looking for a player input for me throw is set to right click
+		if item != null:																								# ensure we are holding an item if not nothing will happen (pervents a crash)
+			var knockback = item.global_position - global_position				# creating a var to apply to our item
+			item.apply_central_impulse(knockback * kb_multiplier)					# applying it and our kb_multiplier
+			drop()
+
+
+
+func rotate_object(event):																					# THIS ONLY WORKS IF YOU DO WHAT IS SHOWN ON LINE 78
+	if item != null and locked == true:																# ensuring there is an item and the camera movement is locked
+		if event is InputEventMouseMotion:															# checking for player input
+			static_body_3d.rotate_x(deg_to_rad(event.relative.y * rotation_power))			# applying rotation
+			static_body_3d.rotate_y(deg_to_rad(event.relative.x * rotation_power))
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if locked == false:																				# this is how i handle camera movement but you may be doing it differently so ensure that you indent all you camera logic and put if locked == false: otherwise both the object and camera will rotate when you chosen button is held																					
+		if event is InputEventMouseMotion:
+			if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+				twist_input = - event.relative.x * mouse_sensitivity
+				pitch_input = - event.relative.y * mouse_sensitivity
+
+func drop():
+	item = null														# sets the designated values to null and false forcing the object to be dropped!
+	holding = false
+	generic_6dof_joint_3d.set_node_b(generic_6dof_joint_3d.get_path())
+
+
+
+# TO FIX JITTERING GO TO project > project settings > common(physics) ensure advanced settings are enabled > Physics Jitter Fix = 0 and if you want this is will eliminate jittering fully for YOU or other people with the same refresh rate as you set Physics TPS to your monitors Hertz for me that is 75hz
+
+
+# your hierarchy must include  twist_piviot(node3D) > pitch_pivot(node3D) > arm(RayCast3D) and hand(Marker3D) and Generic6DOFJoint3D(disable linear limit on all axis ensure the opposite is done for angular limit) and StaticBody3D(have the same pos as the hand)
+# Assigin The staticbody as the Generic6DOFJoint3D's Node A Node be should be left black as we are assigining it via code
+# pitch_pivot should be 0.5 on the Y axis 
+# Ray cast target position should be -3 on the Z
+# Marker should be -2 on the z
+# any item/object you would like the player to interact with must be in the chosen group in my case col but it could be anything
+# let me know if you have any issues with this or require assistance you can contact me via my discord server!
+# https://discord.com/invite/dBSz63xNhN
+
+
+
+
+
+
+
+
+
+
+
