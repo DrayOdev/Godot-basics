@@ -55,11 +55,11 @@ func _process(delta):
 
 	if arm.get_collider != RigidBody3D:		# lets you look at other thigs while the time still takes effect!
 		time -= 0.1		# this is a time calculation we are doing this so we dont have objects "teleporting" across the map
-
-	if Input.is_action_just_pressed("left_click") and arm.is_colliding():
-		if item.is_in_group("col"):
-			generic_6dof_joint_3d.set_node_b(item.get_path())		# id name the generic_6dof_joint_3 something else to make it neater i didn't so it is easier to understand!
-			holding = true			# this is almost the same as last time with just one change shouldn't be hard to implement!
+	if arm.get_collider() is RigidBody3D
+		if Input.is_action_just_pressed("left_click") and arm.is_colliding():
+			if item.is_in_group("col"):
+				generic_6dof_joint_3d.set_node_b(item.get_path())		# id name the generic_6dof_joint_3 something else to make it neater i didn't so it is easier to understand!
+				holding = true			# this is almost the same as last time with just one change shouldn't be hard to implement!
 
 	if Input.is_action_just_pressed("drop"):
 		drop()			# calls the drop func that we have created!
