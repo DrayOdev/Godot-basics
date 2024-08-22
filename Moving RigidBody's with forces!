@@ -94,6 +94,9 @@ func drop():
 
 
 
+
+# GODOT IS WORKING ON PHYSISCS INTERPOLATION AND THIS WILL FIX THE JITTERING ISSUE AT A GUESS THIS WILL BE OUT IN GODOT 4.4 THIS SCRIPT STILL WORKS IN GODOT 4.3
+
 # TO FIX JITTERING GO TO project > project settings > common(physics) ensure advanced settings are enabled > Physics Jitter Fix = 0 and if you want this is will eliminate jittering fully for YOU or other people with the same refresh rate as you set Physics TPS to your monitors Hertz for me that is 75hz
 
 
