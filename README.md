@@ -1,3 +1,6 @@
+NEW CONTENT ADDED! MICROPHONE DETECTION FOR GODOT 4.4.1
+
+
 Hey all! Sorry i havent added to this place in a while i do plan to continue adding stuff! 
 
 To explain a little I got granted the chance to work on a project that I just couldnt turn down and since then I've been busy every day working on it. I plan to return to updating this repository
