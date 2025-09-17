@@ -20,7 +20,7 @@ func _process(delta: float) -> void:
   if volume > -50: # a value of -50 seems to work for me. but you could also get this to be configured by the player
     lerp($Sprite.position.y, volume, 1) # i placed my sprite at a position of x = 275.0 y = -200.0. Now when you talk you'll see it move.
   # if you wanted a system to detect when the player is shouting as loud as godot can register you would do this
-  if volume > -1: # we use this as 0 to -5 is LOUD shouting but again configure how you like and you could get the player to configure this too!
+  if volume > -15: # we use this as -10 to -15 is shouting any lower is unrealistic but again configure how you like and you could get the player to configure this too!
     print("SHOUTING DETECTED!") # logic example
 
 
