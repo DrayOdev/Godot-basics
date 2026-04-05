@@ -8,3 +8,4 @@ at some point during 2026 so please stick around! I'll be sharing loads of tips,
 as a game dev channel! I hope you all forgive me for the time away and i cant wait to get back to helping everyone learn the Godot Engine!
 
 This repository now shares all updates to my personal discord server :D
+Join the discord here -> https://discord.com/invite/dBSz63xNhN
